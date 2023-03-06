@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Students</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+</head>
+<body>
+  <label>Name:</label>
+  <input type="text" id="name" />
+  <br>
+  <label>Age:</label>
+  <input type="number" id="age" />
+  <br>
+  <label>Image:</label>
+  <input type="file" id="image" />
+  <br>
+  <button onclick="addStudent()">Add</button>
+  <div id="display"></div>
+  <script>
+    const MY_SERVER = "http://127.0.0.1:8000";
+    
+    const addStudent = () => {
+      const formData = new FormData();
+      formData.append("name", name.value);
+      formData.append("age", age.value);
+      formData.append("image", image.files[0]);
+
+      axios.post(MY_SERVER + "/students/", formData).then((response) => loadData());
+    }
+
+    const loadData = async () => {
+      const response = await axios.get(MY_SERVER + "/students/");
+      const students = response.data;
+      const display = document.querySelector("#display");
+      display.innerHTML = "";
+      students.forEach(student => {
+        const studentDiv = document.createElement("div");
+        const studentName = document.createElement("h2");
+        studentName.textContent = student.name;
+        const studentAge = document.createElement("p");
+        studentAge.textContent = `Age: ${student.age}`;
+        // const studentImage = document.createElement("image");
+        const studentImage = document.createElement("img");
+        studentImage.src = `${MY_SERVER}${student.image}`;
+        studentDiv.appendChild(studentName);
+        studentDiv.appendChild(studentAge);
+        studentDiv.appendChild(studentImage);
+        display.appendChild(studentDiv);
+      });
+    };
+
+    // const loadData = async () => {
+    //     res = await axios.get(MY_SERVER + "/students");
+    //     display.innerHTML = res.data.map(
+    //       (stu) => `<div>
+    //        <h2> ${student.name} ,${student.age} </h2>
+    //        <img src=${MY_SERVER}${student.image}/>
+    //         </div>`
+    //     );
+    //   };
+
+    const clearForm = () => {
+      name.value = "";
+      age.value = "";
+      image.value = "";
+    };
+    
+    loadData();
+  </script>
+</body>
+</html>
