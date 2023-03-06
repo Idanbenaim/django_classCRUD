@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +9,7 @@
 </head>
 <body>
   <label>Name:</label>
-  <input type="text" id="name" />
+  <input type="text" id="studentName" />
   <br>
   <label>Age:</label>
   <input type="number" id="age" />
@@ -25,7 +24,7 @@
     
     const addStudent = () => {
       const formData = new FormData();
-      formData.append("name", name.value);
+      formData.append("name", studentName.value);
       formData.append("age", age.value);
       formData.append("image", image.files[0]);
 
@@ -53,16 +52,6 @@
       });
     };
 
-    // const loadData = async () => {
-    //     res = await axios.get(MY_SERVER + "/students");
-    //     display.innerHTML = res.data.map(
-    //       (stu) => `<div>
-    //        <h2> ${student.name} ,${student.age} </h2>
-    //        <img src=${MY_SERVER}${student.image}/>
-    //         </div>`
-    //     );
-    //   };
-
     const clearForm = () => {
       name.value = "";
       age.value = "";
@@ -73,3 +62,47 @@
   </script>
 </body>
 </html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+  </head>
+  <body>
+    name: <input id="name"/> 
+    age:<input id="age"/>
+    <input type="file" id="spic"/>
+    <button onclick="addstudent()">Add</button>
+    <div id="display"></div>
+    <script>
+      const MY_SERVER = "http://127.0.0.1:8000";
+      // add new image
+      const addstudent = async () => {
+        const formData = await new FormData();
+        formData.append("name", name.value);
+        formData.append("age", age.value);
+        formData.append("image", spic.files[0]);
+
+        axios.post(MY_SERVER + "/students/", formData).then((r) => loadData());
+      };
+
+      // get all images
+      const loadData = async () => {
+        res = await axios.get(MY_SERVER + "/students/");
+        display.innerHTML = res.data.map(
+          (stu) => `<div>
+           <h2> ${stu.name} ,${stu.age} </h2>
+           <img src=${MY_SERVER}${stu.image}/>
+            </div>`
+        );
+      };
+      loadData();
+    </script>
+  </body>
+</html> -->
+
+
