@@ -20,7 +20,20 @@
   <button onclick="addStudent()">Add</button>
   <div id="display"></div>
   <script>
+    let token = ""
     const MY_SERVER = "http://127.0.0.1:8000";
+    
+    const login = async () => {
+        const config = {
+                headers: { Authorization: `Bearer ${token}` }
+        };    
+        res = await axios.post(MY_SERVER + "/login/", {
+                "username": user.value,
+                "password": pwd.value
+            });
+            token = res.data.access
+            console.log(res.data.access)
+    }
     
     const addStudent = () => {
       const formData = new FormData();

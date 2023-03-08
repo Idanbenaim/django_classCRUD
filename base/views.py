@@ -3,20 +3,21 @@ from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework import serializers
 from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Students
 
-# Create your views here.
+@api_view(['GET'])
 def index(request):
    return Response("test")
-
-
 
 class StudentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Students
         fields = '__all__'
 
+@permission_classes([IsAuthenticated])
 class manageStudents(APIView):
     """
     This class handle the CRUD operations for MyModel
